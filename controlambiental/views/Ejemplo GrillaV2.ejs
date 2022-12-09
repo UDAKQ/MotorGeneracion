@@ -1,0 +1,502 @@
+<% layout('layouts/boilerplateV2') %>
+    <section class="content-pages">
+    <div class="row">
+      <div class="col-12">
+        <div class="card border-0 shadow-xs mb-2">
+          <div class="card-header bg-gradient-info text-white pb-0">
+            <div class="d-sm-flex align-items-center">
+              <div>
+                <h6 class=" text-lg mb-0">
+                  Ejemplo Grilla
+                </h6>
+                <p class="text-sm mb-3"><strong>Descripcion: </strong> Ejemplo Grilla</p>
+                
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-dark" style="position:relative; height:500px;">
+        <div class="content-panels border-top border-secondary border-0 mt-0" style="position: relative">
+          
+    <div class="col-md-6 border border-3 border-light" style="position:absolute; top:<%= objPanels["_attributes"]["Y"] %>px; left:<%= objPanels["_attributes"]["X"] %>px; height:<%= objPanels["_attributes"]["Height"] %>px; width:<%= objPanels["_attributes"]["Weight"] %>px;">
+      <div class="border-bottom border-0 border-light"><div class="bg-success text-sm text-white"><%= objPanels["_attributes"]["Titulo"] %></div></div>
+      <section class="content-panels-objects">
+        <!-- string-panels-objects -->
+        <% if(Array.isArray(objPanels["objeto"])){ %>
+          <!-- Tiene mas de 1 objeto -->
+          <% for(var indexObj=0; indexObj < Object.keys(objPanels["objeto"]).length; indexObj++) { %>
+            <!-- Tiene 1 objeto (medidor)-->
+            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Medidor'){ %>
+              <div class="border border-1 border-light" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>'></div>
+                  <div class='bg-primary text-white text-sm m-0 p-0'><%= objPanels["objeto"][indexObj]["_attributes"]["columnaLabel"]%></div>
+                  <!-- SCRIPT CHART MEDIDOR -->
+                  <script>
+                  var myConfig<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%> = {
+                    type: "gauge",
+                    "scale-r": {                      
+                      aperture: 200,
+                      values: "0:100:20",
+                    },
+                    series: [
+                      {
+                        values: [<%- objPanels["objeto"][indexObj]["_attributes"]["columnaValor"]%>],
+                        csize: "15%", //Needle Indicator Width
+                        size: "75%", //Needle Indicator Length
+                        "background-color": "#CC0066",
+                      },
+                    ],
+                  };
+                
+                  zingchart.render({
+                    id: "myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>",
+                    data: myConfig<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>,
+                    height: "230px",
+                    width: "300px",
+                  });
+                  </script>  
+                  <!-- END SCRIPT CHART MEDIDOR -->
+              </div>
+            <% } %> 
+
+            <!-- Tiene 1 objeto (lineas)-->
+            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Lineas'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>'></div>
+              </div>
+            <% } %> 
+
+            <!-- Tiene 1 objeto (etiqueta)-->
+            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Etiqueta'){ %>
+              <div class="border border-0 border-light" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>' class="alert bg-gradient-info text-dark  text-white ">
+                    <%= objPanels["objeto"][indexObj]["_attributes"]["columna"]%>
+                  </div>
+              </div>
+            <% } %> 
+
+            <!-- Tiene 1 objeto (Link)-->
+            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Link'){ %>
+              <div class="border border-0 border-light" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                <a href="<%- objPanels["objeto"][indexObj]["_attributes"]["url"] || menu[objPanels["objeto"][indexObj]["_attributes"]["pagina"].split('.')[1]] %>" class="text-info">
+                  <u><%= objPanels["objeto"][indexObj]["_attributes"]["url"] || 'Pagina ' + objPanels["objeto"][indexObj]["_attributes"]["pagina"].split('.')[1] %></u>
+                </a>
+              </div>
+            <% } %>
+
+            <!-- Tiene 1 objeto (pastel)-->
+            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Pastel'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>'></div>
+                  <!-- SCRIPT CHART PASTEL -->
+                  <script>
+                  var myConfig<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%> = {
+                    type: "pie",
+                    legend: {
+                      x: "78%",
+                      y: "5%",
+                      'border-width': 1,
+                      'border-color': "gray",
+                      'border-radius': "5px",
+                      header: {
+                        text: "Leyenda",
+                        'font-family': "Open Sans",
+                        'font-size':12,
+                        'font-color': "#3333cc",
+                        'font-weight': "normal"
+                      },
+                      marker: {
+                        type: "circle"
+                      },
+                      'toggle-action': "remove",
+                      'minimize': true,
+                      'icon': {
+                        'line-color': "#9999ff"
+                      },
+                      'max-items':8,
+                      'overflow': "scroll"
+                    },
+                    plot: {
+                      borderColor: "#2B313B",
+                      borderWidth: 5,
+                      // slice: 90,
+                      valueBox: {
+                        placement: "out",
+                        text: "%npv%",
+                        fontFamily: "Open Sans",
+                      },
+                      tooltip: {
+                        fontSize: "18",
+                        fontFamily: "Open Sans",
+                        padding: "5 10",
+                        text: "%t",
+                      },
+                      animation: {
+                        effect: 2,
+                        method: 5,
+                        speed: 900,
+                        sequence: 1,
+                        delay: 3000,
+                      },
+                    },
+                    plotarea: {
+                      margin: "20 0 0 0",
+                    },
+                    series: [
+                      {
+                        values: [<%- objPanels["objeto"][indexObj]["_attributes"]["columnaValor"][0]%>],
+                        text: <%- objPanels["objeto"][indexObj]["_attributes"]["columnaLabel"][0]%>,
+                        backgroundColor: "#50ADF5",
+                      },
+                      {
+                        text: <%- objPanels["objeto"][indexObj]["_attributes"]["columnaLabel"][1]%>,
+                        values: [<%- objPanels["objeto"][indexObj]["_attributes"]["columnaValor"][1]%>],
+                        backgroundColor: "#6877e5",
+                      },
+                      {
+                        text: <%- objPanels["objeto"][indexObj]["_attributes"]["columnaLabel"][2]%>,
+                        values: [<%- objPanels["objeto"][indexObj]["_attributes"]["columnaValor"][2]%>],
+                        backgroundColor: "#6FB07F",
+                      },
+                    ],
+                  };
+                
+                  zingchart.render({
+                    id: "myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>",
+                    data: myConfig<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>,
+                    height: "85%",
+                    width: "99%",
+                  });
+                  </script>  
+                  <!-- END SCRIPT CHART PASTEL -->
+              </div>
+            <% } %>  
+
+            <!-- Tiene 1 objeto (barras)-->
+            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Barras'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>'></div>
+                  <div class='text-sm m-0 p-0'><%= objPanels["objeto"][indexObj]["_attributes"]["columnaLabel"]%></div>
+                  <!-- SCRIPT CHART BARRAS -->
+                  <script>
+                  let chartConfigBarras<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%> = {
+                    type: "bar",
+                    plot: {
+                      valueBox: {
+                        text:"%t",
+                        backgroundColor: 'black',
+                      }
+                    },
+                    scaleX: {
+                      values: [<%- objPanels["objeto"][indexObj]["_attributes"]["columnaLabel"]%>],
+                    },
+                    series: [
+                      {
+                        values: [20, 40, 25, 50, 15, 45, 33, 34],
+                      },
+                    ],
+                  };
+                
+                  zingchart.render({
+                    id: "myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>",
+                    data: chartConfigBarras<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>,
+                    height: "80%",
+                    width: "80%",
+                  });
+                  </script>  
+                  <!-- END SCRIPT CHART BARRAS -->
+              </div>
+            <% } %> 
+
+            <!-- Tiene 1 objeto (filtro)-->
+            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Filtro'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+              <div class="border-bottom border-1 border-light"><span class="badge badge-pill badge-lg bg-gradient-success"><%= objPanels["objeto"][indexObj]["_attributes"]["Titulo"] %></span></div>
+              <% if(!Array.isArray(objPanels["objeto"][indexObj]["parametro"])){ %>
+                  <div id='filtro<%- objPanels["objeto"][indexObj]["_attributes"]["Id"]%>'>
+                    <div class="form-group mb-1">
+                      <input type="text" class="form-control" id="input<%- objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Nombre"] %>" placeholder="<%= objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Etiqueta"] %>">
+                    </div>
+                    <button class="btn btn-dark btn-sm" type="button" onclick='sendObj(<%- JSON.stringify(objPanels["objeto"]) %>)'>Ingresar</button>
+                  </div>
+                  <script>
+                    function sendObj(obj) {
+                      var objSend = obj;
+                      var value = $("#input<%- objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Nombre"] %>").val();
+                      var referencia = <%- JSON.stringify(objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Nombre"]) %>
+                      $.post(
+                        "/request",
+                        {
+                          objSend: JSON.stringify(objSend),
+                          value: JSON.stringify(value),
+                          referencia: JSON.stringify(referencia)
+                        },
+                        function (data, status) {
+                          console.log(data[0].newresObj[0]['_attributes']['columnaLabel']);
+                          console.log(data[0].newresObj[0]['_attributes']['columnaValor']);
+                          var myConfig = {
+                            type: "line",
+                            plotarea: {
+                              "adjust-layout": true,
+                            },
+                            "scale-x": {
+                              label: {
+                                text: data[0].newresObj[0]['_attributes']['Titulo'],
+                              },
+                              labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+                            },
+                            series: [
+                              {
+                                values: data[0].newresObj[0]['_attributes']['columnaValor'],
+                              },
+                            ],
+                          };
+
+                          var nameChart = 'myChart' + data[0].newresObj[0]["_attributes"]["Id"];
+                          console.log(nameChart)
+                        
+                          zingchart.render({
+                            id: nameChart,
+                            data: myConfig,
+                            height: "80%",
+                            width: "80%",
+                          });
+                        }
+                      );
+                    }
+                  </script>
+              <% } else { %>
+                <!-- Tiene mas de 1 parametro el filtro -->
+                <div>
+                  <% for(var indexParams=0; indexParams < Object.keys(objPanels["objeto"][indexObj]["parametro"]).length; indexParams++) { %>
+                      <div class="form-group mb-1">
+                        <input type="text" class="form-control" id="input<%- objPanels["objeto"][indexObj]["parametro"][indexParams]["_attributes"]["Nombre"] %>" placeholder="<%= objPanels["objeto"][indexObj]["parametro"][indexParams]["_attributes"]["Etiqueta"] %>" value="<%= objPanels["objeto"][indexObj]["parametro"][indexParams]["_attributes"]["Predeterminado"] || '' %>">
+                      </div>                  
+                  <% } %> 
+                  <button class="btn btn-dark btn-sm" type="button" onclick='sendObj(<%- JSON.stringify(objPanels["objeto"]) %>)'>Ingresar</button>
+                </div>
+                <script>
+                    function sendObj(obj) {
+                      var objSend = obj;
+                      var valueIni = $("#input<%- objPanels["objeto"][indexObj]["parametro"][0]["_attributes"]["Nombre"] %>").val();
+                      var valueFin = $("#input<%- objPanels["objeto"][indexObj]["parametro"][1]["_attributes"]["Nombre"] %>").val();
+
+                      var referenciaIni = <%- JSON.stringify(objPanels["objeto"][indexObj]["parametro"][0]["_attributes"]["Nombre"]) %>;
+                      var referenciaFin = <%- JSON.stringify(objPanels["objeto"][indexObj]["parametro"][1]["_attributes"]["Nombre"]) %>;
+
+                      $.post(
+                        "/request",
+                        {
+                          objSend: JSON.stringify(objSend),
+                          valueIni: JSON.stringify(valueIni),
+                          valueFin: JSON.stringify(valueFin),
+                          referenciaIni: JSON.stringify(referenciaIni),
+                          referenciaFin: JSON.stringify(referenciaFin),
+                        },
+                        function (data, status) {
+                          console.log(data[0].newresObj[0]['_attributes']['columnaLabel']);
+                          console.log(data[0].newresObj[0]['_attributes']['columnaValor']);
+                          var myConfig = {
+                            type: "line",
+                            plotarea: {
+                              "adjust-layout": true,
+                            },
+                            "scale-x": {
+                              label: {
+                                text: data[0].newresObj[0]['_attributes']['Titulo'],
+                              },
+                              labels: data[0].newresObj[0]['_attributes']['columnaLabel'],
+                            },
+                            series: [
+                              {
+                                values: data[0].newresObj[0]['_attributes']['columnaValor'],
+                              },
+                            ],
+                          };
+
+                          var nameChart = 'myChart' + data[0].newresObj[0]["_attributes"]["Id"];
+                          console.log(nameChart)
+                        
+                          zingchart.render({
+                            id: nameChart,
+                            data: myConfig,
+                            height: "80%",
+                            width: "80%",
+                          });
+                        
+                        }
+                      );
+                    }
+                </script>
+              <% } %>
+              </div>
+            <% } %> 
+          <% } %> 
+        <% } else {%>
+          <!-- Tiene 1 objeto (barras)-->
+            <% if(objPanels["objeto"]["_attributes"]["xsi:type"].split(':')[1] === 'Barras'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"]["_attributes"]["Id"]%>'></div>
+                  <!-- SCRIPT CHART BARRAR -->
+                  <script>
+                  let chartConfig<%- objPanels["objeto"]["_attributes"]["Id"]%> = {
+                    type: "bar",
+                    scaleX: {
+                      values: [<%- objPanels["objeto"]["_attributes"]["columnaLabel"]%>],
+                    },
+                    series: [
+                      {
+                        values: [<%- objPanels["objeto"]["_attributes"]["columnaValor"] %>],
+                      },
+                    ],
+                  };
+                
+                  zingchart.render({
+                    id: "myChart<%- objPanels["objeto"]["_attributes"]["Id"]%>",
+                    data: chartConfig<%- objPanels["objeto"]["_attributes"]["Id"]%>,
+                    height: "90%",
+                    width: "99%",
+                  });
+                  </script>  
+                  <!-- END SCRIPT CHART BARRAS -->
+              </div>
+            <% } %> 
+            <!-- Tiene 1 objeto (pastel)-->
+            <% if(objPanels["objeto"]["_attributes"]["xsi:type"].split(':')[1] === 'Pastel'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"]["_attributes"]["Id"]%>'></div>
+                  <!-- SCRIPT CHART PASTEL -->
+                  <script>
+                  var myConfig<%- objPanels["objeto"]["_attributes"]["Id"]%> = {
+                    type: "pie",
+                    plot: {
+                      borderColor: "#2B313B",
+                      borderWidth: 5,
+                      // slice: 90,
+                      valueBox: {
+                        placement: "out",
+                        text: "%t",
+                        fontFamily: "Open Sans",
+                      },
+                      tooltip: {
+                        fontSize: "18",
+                        fontFamily: "Open Sans",
+                        padding: "5 10",
+                        text: "%npv%",
+                      },
+                      animation: {
+                        effect: 2,
+                        method: 5,
+                        speed: 900,
+                        sequence: 1,
+                        delay: 3000,
+                      },
+                    },
+                    plotarea: {
+                      margin: "20 0 0 0",
+                    },
+                    series: [
+                      {
+                        values: [<%- objPanels["objeto"]["_attributes"]["columnaValor"][0]%>],
+                        text: <%- objPanels["objeto"]["_attributes"]["columnaLabel"][0]%>,
+                        backgroundColor: "#50ADF5",
+                      },
+                      {
+                        text: <%- objPanels["objeto"]["_attributes"]["columnaLabel"][1]%>,
+                        values: [<%- objPanels["objeto"]["_attributes"]["columnaValor"][1]%>],
+                        backgroundColor: "#6877e5",
+                      },
+                      {
+                        text: <%- objPanels["objeto"]["_attributes"]["columnaLabel"][2]%>,
+                        values: [<%- objPanels["objeto"]["_attributes"]["columnaValor"][2]%>],
+                        backgroundColor: "#6FB07F",
+                      },
+                    ],
+                  };
+                
+                  zingchart.render({
+                    id: "myChart<%- objPanels["objeto"]["_attributes"]["Id"]%>",
+                    data: myConfig<%- objPanels["objeto"]["_attributes"]["Id"]%>,
+                    height: "85%",
+                    width: "99%",
+                  });
+                  </script>  
+                  <!-- END SCRIPT CHART PASTEL -->
+              </div>
+            <% } %> 
+            <!-- Tiene 1 objeto (barras)-->
+            <% if(objPanels["objeto"]["_attributes"]["xsi:type"].split(':')[1] === 'Barras'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"]["_attributes"]["Id"]%>'></div>
+                  <!-- SCRIPT CHART BARRAR -->
+                  <script>
+                  let chartConfigBarras<%- objPanels["objeto"]["_attributes"]["Id"]%> = {
+                    type: "bar",
+                    stacked: true,
+                    plot: {
+                      valueBox: {
+                        text:"Total: %stack-total",
+                        backgroundColor: '',
+                      }
+                    },
+                    scaleX: {
+                      values: [<%- objPanels["objeto"]["_attributes"]["columnaLabel"]%>],
+                    },
+                    series: [
+                      {
+                        values: [<%- objPanels["objeto"]["_attributes"]["columnaValor"] %>],
+                      },
+                    ],
+                  };
+                
+                  zingchart.render({
+                    id: "myChart<%- objPanels["objeto"]["_attributes"]["Id"]%>",
+                    data: chartConfigBarras<%- objPanels["objeto"]["_attributes"]["Id"]%>,
+                    height: "90%",
+                    width: "99%",
+                  });
+                  </script>  
+                  <!-- END SCRIPT CHART BARRAS -->
+              </div>
+            <% } %> 
+            <!-- Tiene 1 objeto (grilla)-->
+            <% if(objPanels["objeto"]["_attributes"]["xsi:type"].split(':')[1] === 'Grilla'){ %>
+              <div class="border border-2 border-light" style="position:absolute; top:<%= objPanels["objeto"]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"]["_attributes"]["Weight"] %>px;">
+                  <div id='myChart<%- objPanels["objeto"]["_attributes"]["Id"]%>'>
+                  <table class="table">
+                    <thead class="bg-gray-100">
+                      <tr>
+                      <th scope="col" class="text-secondary text-xs font-weight-semibold opacity-7 border-light ps-2">ID</th>
+                      <th scope="col" class="text-secondary text-xs font-weight-semibold opacity-7 border-light ps-2">Metrica</th>
+                      <th scope="col" class="text-secondary text-xs font-weight-semibold opacity-7 border-light ps-2">Valor</th>
+                      <th scope="col" class="text-secondary text-xs font-weight-semibold opacity-7 border-light ps-2">Tipo</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>                      
+                        <% for(var ix=0; ix < Object.keys(objPanels["objeto"]["_attributes"]["columna"][0]).length; ix++) { %>                     
+                          <tr>
+                          <% for(var iy=0; iy < Object.keys(objPanels["objeto"]["_attributes"]["columna"]).length; iy++) { %>
+                            <td class="text-sm text-secondary mb-0"><%= objPanels["objeto"]["_attributes"]["columna"][iy][ix]%></td>                  
+                          <% } %>
+                          </tr>
+                        <% } %>
+                    </tbody>
+                  </table>
+                  </div>
+                  <!-- SCRIPT CHART GRILLA -->
+                  <script>
+                  </script>  
+                  <!-- END SCRIPT CHART GRILLA -->
+              </div>
+            <% } %>
+        <% }%> 
+      </section>
+    </div>
+              
+        </div>
+      </div>
+    </div>
+    </section>    
+    

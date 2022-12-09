@@ -1,0 +1,273 @@
+<% layout('layouts/boilerplate') %>
+        <section class="content-page">
+            <div class="p-3 mb-2 bg-dark bg-gradient text-white">
+            <h4 class="text-white">PREDECIR EL USO DE LA CPU DEL NODO FOG PARA UN CIERTO NUMERO DE SENSORES</h4>
+            <strong>Descripcion: </strong> PREDECIR EL USO DE LA CPU DEL NODO FOG PARA UN CIERTO NUMERO DE SENSORES
+            <strong>Frecuencia: </strong> 5
+            </div>
+        </section>
+        <section class="content-panels border-top border-secondary rounded-1 border-1">
+            <div style="position: relative">
+                
+    <div class="col-md-6 border border-1 bg-light text-dark border-primary" style="position:absolute; top:<%= objPanels["_attributes"]["Y"] %>px; left:<%= objPanels["_attributes"]["X"] %>px; height:<%= objPanels["_attributes"]["Height"] %>px; width:<%= objPanels["_attributes"]["Weight"] %>px;">
+            <h6><span class="badge bg-secondary"><%= objPanels["_attributes"]["Titulo"] %></span></h6>
+            <section class="content-panels-objects">
+                <div style="position: relative">
+                    <!-- string-panels-objects -->
+                    <% if(Array.isArray(objPanels["objeto"])){ %>
+                        <!-- Tiene mas de 1 objeto -->
+                        <% for(var indexObj=0; indexObj < Object.keys(objPanels["objeto"]).length; indexObj++) { %>
+                            <!-- Tiene 1 objeto (medidor)-->
+                            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Medidor'){ %>
+                                <!-- Start Card Dark -->
+                                <div class="card text-white bg-dark mb-2" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                                  <h5 class="card-header">Titulo: <%= objPanels["objeto"][indexObj]["_attributes"]["Titulo"] %></h5>
+                                  <div class="card-body">
+                                    <h5 class="card-title">Tipo: <%= objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] %></h5>
+                                    <!-- CHART -->
+                                    <div>
+                                    <div id='myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>'></div>
+                                    <div class="mt-2"><strong>Umbral: </strong> <%= objPanels["objeto"][indexObj]["_attributes"]["Umbral"] %>
+                                    </div>
+                                    </div>
+                                    <script>
+                                    var myConfig<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %> = {
+                                        "type":"gauge",
+                                        "scale-r":{
+                                          "aperture":200,
+                                          "values":"0:1000:200",
+                                          item:{
+                                            offsetR:0,
+                                            rules:[
+                                              {
+                                                rule:'%i == 9',
+                                                offsetX:15
+                                              }
+                                            ]
+                                          },
+                                          ring:{
+                                            size:10,
+                                          },
+                                        },
+                                        "series":[
+                                          {
+                                            "values":[<%- objPanels["objeto"][indexObj]["_attributes"]["Umbral"] %>],
+                                            "csize":"5%", //Needle Umbral Width
+                                            "size":"100%",  //Needle Indicator Length
+                                            "background-color":"#000000"      
+                                          },
+                                          {
+                                            "values":[0],
+                                            "csize":"15%", //Needle Indicator Width
+                                            "size":"75%",  //Needle Indicator Length
+                                            "background-color":"#CC0066" 
+                                          },
+                                        ]
+                                      };
+                                      
+                                      zingchart.render({ 
+                                        id : 'myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>', 
+                                        data : myConfig<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>, 
+                                        height : "200px", 
+                                        width: "100%" 
+                                      });
+                                    </script>  
+                                    <!-- END CHART -->    
+                                    
+                                    <div class="mt-2">
+                                    <p id="input_<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>"></p>
+                                    </div>                   
+                                  </div>
+                                </div>
+                                <!-- End Card Dark -->                          
+                                </div>
+                            <% } %>
+
+                            <!-- Tiene 1 objeto (pastel)-->
+                            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Pastel'){ %>
+                                <!-- Start Card Dark -->
+                                <div class="card text-white bg-dark mb-2">
+                                  <h5 class="card-header">Titulo: <%= objPanels["objeto"][indexObj]["_attributes"]["Titulo"] %></h5>
+                                  <div class="card-body">
+                                    <h5 class="card-title">Tipo: <%= objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] %></h5>
+                                    <!-- CHART -->
+                                    <div>
+                                      <canvas id="myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>"></canvas>
+                                    </div>
+                                    <script>
+                                    let chartPastel = new Chart(document.getElementById("myChart<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>"), {
+                                      type: 'pie',
+                                      data: {
+                                        labels: [],
+                                        datasets: [{
+                                          label: "Population (millions)",
+                                          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                                          data: []
+                                        }]
+                                      },
+                                      options: {
+                                        title: {
+                                          display: true,
+                                          text: 'Predicted world population (millions) in 2050'
+                                        }
+                                      }
+                                    });
+                                    </script>  
+                                    <!-- END CHART -->                      
+                                  </div>
+                                </div>
+                                <!-- End Card Dark -->                          
+                                </div>
+                            <% } %>
+
+                            <!-- Tiene 1 objeto (Etiqueta)-->
+                            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Etiqueta'){ %>
+                              <div class="alert alert-info" id="etiqueta_<%- objPanels["objeto"][indexObj]["_attributes"]["id"] %>" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                                <%= objPanels["objeto"][indexObj]["_attributes"]["Texto"] || 'Esperando...'%>
+                              </div>
+                            <% } %> 
+
+                            <!-- Tiene 1 objeto (filtro)-->
+                            <% if(objPanels["objeto"][indexObj]["_attributes"]["xsi:type"].split(':')[1] === 'Filtro'){ %>
+                              <% if(!Array.isArray(objPanels["objeto"][indexObj]["parametro"])){ %>
+                                <div class="input-group mb-3" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                                    <input type="text" class="form-control" id="input_<%- objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Nombre"] %>" placeholder="<%= objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Etiqueta"] %>">
+                                    <button class="btn btn-outline-secondary" type="button" id="btn_<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>">Ingresar</button>
+                                </div>                               
+                                <script>
+                                $(document).ready(function () {
+                                    $("#btn_<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>").click(function () {
+                                        
+                                        var refes = [];
+                                        var x = document.getElementById("input_<%- objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Nombre"] %>").value || 1;
+                                        
+                                        refes.push({ref: '<%- objPanels["objeto"][indexObj]["parametro"]["_attributes"]["Nombre"] %>', value: x})
+                                        
+                                        var arrayContent= <%- JSON.stringify(objPanels["objeto"]) %>;
+                                        console.log(arrayContent)
+                                        $.post("/request",
+                                          {
+                                            ref: JSON.stringify(refes),
+                                            objectos_modifi: JSON.stringify(arrayContent),
+                                            columnaLabel: '<%- objPanels["objeto"][indexObj-1]["_attributes"]["columnaLabel"].replace(/\s/g, '') %>',
+                                            columnaValor: '<%- objPanels["objeto"][indexObj-1]["_attributes"]["columnaValor"].replace(/\s/g, '') %>'
+                                          },
+                                          function (data, status) {
+                                             console.log(data[0].columna_Valor);
+                                             console.log(data[0].columna_Label);
+                                             
+                                             console.log(data[0].newObjPanels);
+                                             for (
+                                              let indexNewPanels = 0;
+                                              indexNewPanels < Object.keys(data[0].newObjPanels).length;
+                                              indexNewPanels++
+                                            ) {
+                                              console.log(data[0].newObjPanels[indexNewPanels]._attributes['xsi:type']);
+                                              if(data[0].newObjPanels[indexNewPanels]._attributes['xsi:type'].split(':')[1] === 'Etiqueta'){
+                                               var nameX = 'etiqueta_' + data[0].newObjPanels[indexNewPanels]._attributes['id'];
+                                               console.log('HERE',nameX);
+                                               var x = document.getElementById(nameX);
+                                               console.log(x)
+                                               x.innerHTML = data[0].newObjPanels[indexNewPanels]._attributes['columna'] || data[0].newObjPanels[indexNewPanels]._attributes['Texto'];
+                                              }
+                                            }
+
+                                             
+                                             <% if(objPanels["objeto"][indexObj-1]["_attributes"]["xsi:type"].split(':')[1] === 'Medidor'){ %>
+                                              <!-- Filtro (MEDIDOR)-->  
+                                              document.getElementById("input_<%- objPanels["objeto"][indexObj-1]["_attributes"]["Titulo"].replace(/\s/g, '') %>").innerHTML = data[0].columna_Label;
+                                              var myConfig<%- objPanels["objeto"][indexObj-1]["_attributes"]["Titulo"].replace(/\s/g, '') %> = {
+                                                "type":"gauge",
+                                                "scale-r":{
+                                                  "aperture":200,
+                                                  "values":"0:1000:200",
+                                                  item:{
+                                                    offsetR:0,
+                                                    rules:[
+                                                      {
+                                                        rule:'%i == 9',
+                                                        offsetX:15
+                                                      }
+                                                    ]
+                                                  },
+                                                  ring:{
+                                                    size:10,
+                                                  },
+                                                },
+                                                "series":[
+                                                  {
+                                                    "values":[<%- objPanels["objeto"][indexObj-1]["_attributes"]["Umbral"] %>],
+                                                    "csize":"5%", //Needle Umbral Width
+                                                    "size":"100%",  //Needle Indicator Length
+                                                    "background-color":"#000000"      
+                                                  },
+                                                  {
+                                                    "values":[parseFloat(data[0].columna_Valor)],
+                                                    "csize":"15%", //Needle Indicator Width
+                                                    "size":"75%",  //Needle Indicator Length
+                                                    "background-color":"#CC0066" 
+                                                  },
+                                                ]
+                                              };
+                                              
+                                              zingchart.render({ 
+                                                id : 'myChart<%- objPanels["objeto"][indexObj-1]["_attributes"]["Titulo"].replace(/\s/g, '') %>', 
+                                                data : myConfig<%- objPanels["objeto"][indexObj-1]["_attributes"]["Titulo"].replace(/\s/g, '') %>, 
+                                                height : "200px", 
+                                                width: "100%" 
+                                              });
+                                              <% } %>     
+                                              
+                                              <% if(objPanels["objeto"][indexObj-1]["_attributes"]["xsi:type"].split(':')[1] === 'Pastel'){ %>
+                                                <!-- Filtro (PASTEL)-->  
+                                                var pastelChart = chartPastel;
+                                                pastelChart.data.labels = []
+                                                pastelChart.data.labels = data[0].columna_Label;
+                                                pastelChart.data.datasets[0].data = [];
+                                                pastelChart.data.datasets[0].data = data[0].columna_Valor;
+                                                pastelChart.update();
+                                                console.log("entra", pastelChart)
+                                                <% } %> 
+                                            });
+                                    });
+                                });
+                                </script> 
+                              <% }  else {%>
+                                    <div class="input-group mb-3" style="position:absolute; top:<%= objPanels["objeto"][indexObj]["_attributes"]["Y"] %>px; left:<%= objPanels["objeto"][indexObj]["_attributes"]["X"] %>px; height:<%= objPanels["objeto"][indexObj]["_attributes"]["Height"] %>px; width:<%= objPanels["objeto"][indexObj]["_attributes"]["Weight"] %>px;">
+                                      <% for(var indexParam=0; indexParam < Object.keys(objPanels["objeto"][indexObj]["parametro"]).length; indexParam++) { %>
+                                        <input type="text" class="form-control" id="input_<%- objPanels["objeto"][indexObj]["parametro"][indexParam]["_attributes"]["Nombre"] %>" placeholder="<%= objPanels["objeto"][indexObj]["parametro"][indexParam]["_attributes"]["Etiqueta"] %>">
+                                      <% } %>
+                                    <button class="btn btn-outline-secondary" type="button" id="btn_<%- objPanels["objeto"][indexObj]["_attributes"]["Titulo"].replace(/\s/g, '') %>">Ingresar</button>
+                                    </div> 
+                                <% }%>
+                            <% } %>
+                        <% } %> 
+                    <% } else {%>
+                        <!-- Tiene 1 objeto -->
+                        <!-- Tiene 1 objeto (medidor)-->
+                        <% if(objPanels["objeto"]["_attributes"]["xsi:type"].split(':')[1] === 'Medidor'){ %>
+                            <!-- Start Card Dark -->
+                            <div class="card text-white bg-dark mb-2">
+                              <h5 class="card-header">Titulo: <%= objPanels["objeto"]["_attributes"]["Titulo"] %></h5>
+                              <div class="card-body">
+                                <h5 class="card-title">Tipo: <%= objPanels["objeto"]["_attributes"]["xsi:type"].split(':')[1] %></h5>
+                                CHART MEDIDOR                     
+                              </div>
+                            </div>
+                            <!-- End Card Dark -->
+                        <% } %>
+                        <!-- Tiene 1 objeto (Filtro)-->
+                        <% if(objPanels["objeto"]["_attributes"]["xsi:type"].split(':')[1] === 'Filtro'){ %>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                            </div>
+                        <% } %>
+                    <% } %> 
+                </div>
+            </section>
+    </div>
+    
+            </div>
+        </section>
+    

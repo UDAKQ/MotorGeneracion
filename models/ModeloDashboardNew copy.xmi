@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dashboard2:Dashboard
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dashboard2="http://www.example.org/dashboard2"
+    xsi:schemaLocation="http://www.example.org/dashboard2 dashboard2.ecore"
+    Nombre="Dashboard control ambiental"
+    Descripcion="Metricas control ambiental"
+    Autor="Kevin"
+    Url="controlambiental">
+  <pagina Id="1"
+      TituloPagina="CONCENTRACION RIESGO PROMEDIO DIARIO DE MONOXIDO DE CARBONO (CO) EN EL AMBIENTE DE LA COCINA"
+      Descripcion="CONCENTRACION RIESGO PROMEDIO DIARIO DE MONOXIDO DE CARBONO (CO) EN EL AMBIENTE DE LA COCINA"
+      TituloMenu="CONCENTRACION RIESGO PROMEDIO DIARIO DE MONOXIDO DE CARBONO (CO) EN EL AMBIENTE DE LA COCINA"
+      FrecuenciaRecarga="5">
+    <panel Titulo="CONCENTRACION RIESGO PROMEDIO DIARIO DE MONOXIDO DE CARBONO (CO) EN EL AMBIENTE DE LA COCINA"
+        X="0.0"
+        Y="10.0"
+        Weight="1100.0"
+        Height="500.0">
+      <objeto
+          xsi:type="dashboard2:Lineas"
+          Id="1"
+          X="1.0"
+          Y="40.0"
+          Weight="780.0"
+          Height="420.0"
+          Titulo="NIVEL DE RIESGO DE LA CONCENTRACION DE MONOXIDO DE CARBONO DIARIO"
+          columnaValor="//@fuentedatos.0/@tabla.0/@columna.1"
+          columnaLabel="//@fuentedatos.0/@tabla.0/@columna.2"
+          />
+      <objeto
+          xsi:type="dashboard2:Filtro"
+          Id="2"
+          X="800.0"
+          Y="40.0"
+          Weight="280.0"
+          Height="165.0"
+          Titulo="Filtro">
+          <parametro
+            Etiqueta="Fecha Inicial"
+            Nombre="fechaIni"
+            Predeterminado="2022-10-13"            
+          />
+          <parametro
+            Etiqueta="Fecha Fin"
+            Nombre="fechaFin"  
+            Predeterminado="2022-11-30"          
+          />
+      </objeto>
+    </panel>
+  </pagina>
+  <pagina Id="2"
+      TituloPagina="CONCENTRACION RIESGO ACTUAL DE MONOXIDO DE CARBONO EN EL AMBIENTE DE LA COCINA"
+      Descripcion="CONCENTRACION RIESGO ACTUAL DE MONOXIDO DE CARBONO EN EL AMBIENTE DE LA COCINA"
+      TituloMenu="CONCENTRACION RIESGO ACTUAL DE MONOXIDO DE CARBONO EN EL AMBIENTE DE LA COCINA"
+      FrecuenciaRecarga="5">
+    <panel Titulo="CONCENTRACION RIESGO ACTUAL DE MONOXIDO DE CARBONO EN EL AMBIENTE DE LA COCINA"
+        X="0.0"
+        Y="0.0"
+        Weight="500.0"
+        Height="330.0">
+      <objeto
+          xsi:type="dashboard2:Medidor"
+          Id="1"
+          X="1.0"
+          Y="45.0"
+          Weight="300.0"
+          Height="280.0"
+          Min="0.0"
+          Max="100.0"
+          Titulo="CONCENTRACION RIESGO ACTUAL DE MONOXIDO DE CARBONO EN EL AMBIENTE DE LA COCINA"
+          columnaValor="//@fuentedatos.1/@tabla.0/@columna.1"
+          columnaLabel="//@fuentedatos.1/@tabla.0/@columna.0"/>
+      <objeto
+          xsi:type="dashboard2:Etiqueta"
+          Id="2"
+          X="310.0"
+          Y="45.0"
+          Weight="180.0"
+          Height="120.0"
+          Tipo="Ejecucion"
+          columna="//@fuentedatos.1/@tabla.0/@columna.2"/>
+    </panel>
+  </pagina>
+  <pagina Id="3"
+      TituloPagina="PREDECIR EL USO DE LA CPU DEL NODO FOG PARA UN CIERTO NUMERO DE SENSORES"
+      Descripcion="PREDECIR EL USO DE LA CPU DEL NODO FOG PARA UN CIERTO NUMERO DE SENSORES"
+      TituloMenu="PREDECIR EL USO DE LA CPU DEL NODO FOG PARA UN CIERTO NUMERO DE SENSORES"
+      FrecuenciaRecarga="5">
+    <panel Titulo="PREDECIR EL USO DE LA CPU DEL NODO FOG PARA UN CIERTO NUMERO DE SENSORES"
+        X="0.0"
+        Y="10.0"
+        Weight="1100.0"
+        Height="500.0">
+      <objeto
+          xsi:type="dashboard2:Lineas"
+          Id="1"
+          X="1.0"
+          Y="40.0"
+          Weight="780.0"
+          Height="420.0"
+          Titulo="PREDECIR EL USO DE LA CPU DEL NODO FOG PARA UN CIERTO NUMERO DE SENSORES"
+          columnaValor="//@fuentedatos.2/@tabla.0/@columna.1"
+          columnaLabel="//@fuentedatos.2/@tabla.0/@columna.2"
+          />
+      <objeto
+          xsi:type="dashboard2:Filtro"
+          Id="2"
+          X="800.0"
+          Y="40.0"
+          Weight="280.0"
+          Height="165.0"
+          Titulo="Filtro">
+          <parametro
+            Etiqueta="Fecha Inicial"
+            Nombre="fechaIni"
+            Predeterminado="2022-10-13"            
+          />
+          <parametro
+            Etiqueta="Fecha Fin"
+            Nombre="fechaFin"  
+            Predeterminado="2022-11-30"          
+          />
+      </objeto>
+    </panel>
+  </pagina>
+  <pagina Id="4"
+      TituloPagina="USO ACTUAL DE LA CPU DEL NODO FOG"
+      Descripcion="USO ACTUAL DE LA CPU DEL NODO FOG"
+      TituloMenu="USO ACTUAL DE LA CPU DEL NODO FOG"
+      FrecuenciaRecarga="5">
+    <panel Titulo="USO ACTUAL DE LA CPU DEL NODO FOG"
+        X="0.0"
+        Y="0.0"
+        Weight="500.0"
+        Height="330.0">
+      <objeto
+          xsi:type="dashboard2:Medidor"
+          Id="1"
+          X="1.0"
+          Y="45.0"
+          Weight="300.0"
+          Height="280.0"
+          Min="0.0"
+          Max="100.0"
+          Titulo="USO ACTUAL DE LA CPU DEL NODO FOG"
+          columnaValor="//@fuentedatos.3/@tabla.0/@columna.1"
+          columnaLabel="//@fuentedatos.3/@tabla.0/@columna.0"/>
+      <objeto
+          xsi:type="dashboard2:Etiqueta"
+          Id="2"
+          X="310.0"
+          Y="45.0"
+          Weight="180.0"
+          Height="120.0"
+          Tipo="Ejecucion"
+          columna="//@fuentedatos.3/@tabla.0/@columna.2"/>
+    </panel>
+  </pagina>
+  <cadenaconexion
+      Esquema="postgres"
+      Puerto="4321"
+      Usuario="postgres"
+      Contrasena="postgres"
+      fuentedatos="//@fuentedatos.0 //@fuentedatos.1"/>
+  <fuentedatos
+      Id="1"
+      Tipo="Consulta"
+      Nombre="Carga cpu actual"
+      UltimoDato="true"
+      cadenaconexion="//@cadenaconexion.0">
+    <tabla Nombre="metricas">
+      <columna
+          Nombre="mid"
+          Titulo="IdMetrica"
+          Criterio="mid='3'"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Nombre="valor"
+          Titulo="Valor Metrica"
+          TipoAgregacion="Promedio"
+          graficoValor="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Nombre="fecha::date"
+          Titulo="Fecha"
+          Ordenar="true"
+          Criterio="fecha::date >= [fechaIni] AND fecha::date <= [fechaFin]"
+          TipoAgregacion="Agrupar Por"/>
+      <columna
+          Nombre="pid"
+          Titulo="pid"
+          Criterio="pid='2'"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+    </tabla>
+  </fuentedatos>
+  <fuentedatos
+      Id="2"
+      Tipo="Consulta"
+      Nombre="MEDIDOR"
+      DatosUnicos="true"      
+      UltimoDato="true"
+      cadenaconexion="//@cadenaconexion.0">
+    <tabla Nombre="metricas">
+      <columna
+          Nombre="midname"
+          Titulo="nombre metrica"
+          Criterio="mid='3'"
+          TipoAgregacion="Agrupar Por"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Ordinal="1"
+          Nombre="valor"
+          Titulo="Valor Metrica"
+          graficoValor="//@pagina.0/@panel.0/@objeto.0"
+          TipoAgregacion="Promedio"/>
+      <columna
+          Nombre="recomendacion"
+          Titulo="Recomendacion"
+          etiqueta="//@pagina.0/@panel.0/@objeto.2"
+          TipoAgregacion="Agrupar Por"/>
+      <columna
+          Nombre="pid"
+          Titulo="pid"
+          Criterio="pid='1'"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Nombre="fecha::date"
+          Titulo="Fecha"
+          Ordenar="true"
+          TipoAgregacion="Agrupar Por"/>
+    </tabla>
+  </fuentedatos>
+  <fuentedatos
+      Id="3"
+      Tipo="Consulta"
+      Nombre="Carga cpu actual"
+      UltimoDato="true"
+      cadenaconexion="//@cadenaconexion.0">
+    <tabla Nombre="metricas">
+      <columna
+          Nombre="mid"
+          Titulo="IdMetrica"
+          Criterio="mid='9'"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Nombre="valor"
+          Titulo="Valor Metrica"
+          TipoAgregacion="Promedio"
+          graficoValor="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Nombre="fecha::date"
+          Titulo="Fecha"
+          Ordenar="true"
+          Criterio="fecha::date >= [fechaIni] AND fecha::date <= [fechaFin]"
+          TipoAgregacion="Agrupar Por"/>
+      <columna
+          Nombre="pid"
+          Titulo="pid"
+          Criterio="pid='4'"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+    </tabla>
+  </fuentedatos>
+  <fuentedatos
+      Id="4"
+      Tipo="Consulta"
+      Nombre="MEDIDOR"
+      DatosUnicos="true"      
+      UltimoDato="true"
+      cadenaconexion="//@cadenaconexion.0">
+    <tabla Nombre="metricas">
+      <columna
+          Nombre="midname"
+          Titulo="nombre metrica"
+          Criterio="mid='9'"
+          TipoAgregacion="Agrupar Por"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Ordinal="1"
+          Nombre="valor"
+          Titulo="Valor Metrica"
+          graficoValor="//@pagina.0/@panel.0/@objeto.0"
+          TipoAgregacion="Promedio"/>
+      <columna
+          Nombre="recomendacion"
+          Titulo="Recomendacion"
+          etiqueta="//@pagina.0/@panel.0/@objeto.2"
+          TipoAgregacion="Agrupar Por"/>
+      <columna
+          Nombre="pid"
+          Titulo="pid"
+          Criterio="pid='3'"
+          graficoLabel="//@pagina.0/@panel.0/@objeto.0"/>
+      <columna
+          Nombre="fecha::date"
+          Titulo="Fecha"
+          Ordenar="true"
+          TipoAgregacion="Agrupar Por"/>
+    </tabla>
+  </fuentedatos>
+</dashboard2:Dashboard>
