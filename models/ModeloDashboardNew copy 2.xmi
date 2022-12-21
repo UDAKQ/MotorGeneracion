@@ -86,7 +86,7 @@
   </pagina>
   <cadenaconexion
       Esquema="postgres"
-      Puerto="4321"
+      Puerto="5432"
       Usuario="postgres"
       Contrasena="postgres"
       fuentedatos="//@fuentedatos.0 //@fuentedatos.1"/>

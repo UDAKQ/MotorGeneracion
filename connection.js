@@ -7,7 +7,7 @@ const setupPostgres = (obj) => {
     port: obj["cadenaconexion"]["_attributes"]["Puerto"],
     user: obj["cadenaconexion"]["_attributes"]["Usuario"],
     password: obj["cadenaconexion"]["_attributes"]["Contrasena"],
-    host: "127.0.0.1",
+    host: "postgres_db",
   };
   //   console.log(colors.bgGreen("Obj Connection:", configConnection));
   return configConnection;

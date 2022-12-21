@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  motor_generacion:
+    image: panatta2/motor_generacion:1
+    ports:
+      - 3000:3000
+    volumes:
+      - ./models:/src/app/models
+    depends_on:
+      - postgres_db
+  postgres_db:
+    image: postgres
+    restart: always
+    environment:
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_DB: postgres
+      DATABASE_HOST_AUTH_METHOD: trust
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./postgres-mac-data:/var/lib/postgresql/data
